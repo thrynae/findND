@@ -1,0 +1,1243 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>findND</title><meta name="generator" content="MATLAB 9.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-11-29"><meta name="DC.source" content="findND.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>findND</h1><!--introduction--><p><tt style="font-size:0%">Formatted documentation for the findND function.</tt>
+<div style="margin-top:-5em;color:grey">Find non-zero elements in ND-arrays. Replicates all behavior from find.
+</div>
+</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Description</a></li><li><a href="#2">Syntax</a></li><li><a href="#3">Output arguments</a></li><li><a href="#4">Input arguments</a></li><li><a href="#5">Compatibility, version info, and licence</a></li><li><a href="#6">Test suite</a></li></ul></div><h2 id="1">Description</h2><p>
+The syntax is equivalent to the built-in find, but extended to multi-dimensional input.
+<br>The syntax with more than one input is present in the doc for R14 (Matlab 7.0), so R13
+(Matlab 6.5) is the latest release without support for this syntax.
+</p><h2 id="2">Syntax</h2><pre class="language-matlab">[___] = findND(X,K)
+[___] = findND(X,K,side)
+[I1,I2,I3,<span class="keyword">...</span><span class="comment">,In] = findND(___)</span>
+[I1,I2,I3,<span class="keyword">...</span><span class="comment">,In,V] = findND(___)</span>
+</pre><h2 id="3">Output arguments</h2><p>
+<table border=1>
+<tr><td>
+I1-In
+</td><td>
+Subscript indices for the positions found. Each is a column vector, except if the input array is
+a row vector.
+</td></tr>
+<tr><td>
+V
+</td><td>
+Array values on the found indices returns as a column vector, excect if the input array is a row
+vector.
+</td></tr>
+</table>
+</p><h2 id="4">Input arguments</h2><p>
+<table border=1>
+<tr><td>
+X
+</td><td>
+Input data array. This can be any data type that is compatible with the builtin find or any
+custom class that has a find method.
+</td></tr>
+<tr><td>
+K
+</td><td>
+This positive scalar integer determines how many indices will be returned at most. Note that
+fewer return values are possible.
+</td></tr>
+<tr><td>
+side
+</td><td>
+This option determines whether the first <code>K</code> or the last <code>K</code> values are
+returned. Allowed options are <code>'first'</code> and <code>'last'</code>, the former being the
+default.
+</td></tr>
+</table>
+</p><h2 id="5">Compatibility, version info, and licence</h2><p>
+Compatibility considerations:
+<ul>
+   <li>This is expected to work on all releases.</li>
+</ul>
+</p><p>
+<table>
+<tr>
+<td> Test suite result </td>
+<td style="border:2px solid black;"> Windows </td>
+<td style="border:2px solid black;"> Linux </td>
+<td style="border:2px solid black;"> MacOS </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2022b </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it>ubuntu_22.04 : Pass</it> </td>
+<td> <it>Monterey : Pass</it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2022a </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it></it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2021b </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it>ubuntu_22.04 : Pass</it> </td>
+<td> <it>Monterey : Pass</it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2021a </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it></it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2020b </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it>ubuntu_22.04 : Pass</it> </td>
+<td> <it>Monterey : Pass</it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2020a </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it></it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2019b </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it>ubuntu_22.04 : Pass</it> </td>
+<td> <it>Monterey : Pass</it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2019a </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it></it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2018a </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it>ubuntu_22.04 : Pass</it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2017b </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it>ubuntu_22.04 : Pass</it> </td>
+<td> <it>Monterey : Pass</it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2016b </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it>ubuntu_22.04 : Pass</it> </td>
+<td> <it>Monterey : Pass</it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2015a </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it>ubuntu_22.04 : Pass</it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2013b </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it></it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2012a </td>
+<td> <it></it> </td>
+<td> <it>ubuntu_22.04 : Pass</it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2011a </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it>ubuntu_22.04 : Pass</it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2010b </td>
+<td> <it></it> </td>
+<td> <it>ubuntu_22.04 : Pass</it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2010a </td>
+<td> <it>W7 : Pass</it> </td>
+<td> <it></it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab R2007b </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it></it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab 7.1 (R14SP3) </td>
+<td> <it>XP : Pass</it> </td>
+<td> <it></it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Matlab 6.5 (R13) </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it></it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Octave 7.2.0 </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it></it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Octave 6.2.0 </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it>ubuntu_22.04 : Pass</it> </td>
+<td> <it>Catalina : Pass</it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Octave 5.2.0 </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it></it> </td>
+<td> <it></it> </td>
+</tr>
+<tr>
+<td style="border:2px solid black;"> Octave 4.4.1 </td>
+<td> <it>W10 : Pass</it> </td>
+<td> <it></it> </td>
+<td> <it>Catalina : Pass</it> </td>
+</tr>
+</table>
+</p><pre>Version: 2.0.0
+Date:    2022-11-29
+Author:  H.J. Wisselink
+Licence: CC by-nc-sa 4.0 ( https://creativecommons.org/licenses/by-nc-sa/4.0 )
+Email = 'h_j_wisselink*alumnus_utwente_nl';
+Real_email = regexprep(Email,{'*','_'},{'@','.'})</pre><h2 id="6">Test suite</h2><p>This tester is included so you can test if your own modifications would introduce any bugs. These tests form the basis for the compatibility table above. Note that functions may be different between the tester version and the normal function. Make sure to apply any modifications to both. The full tester function is included below.</p><pre class="codeinput"><span class="keyword">function</span> pass_part_fail=aaa___findND___test(varargin)
+<span class="comment">%This is not a true test suite, but it should confirm the function runs without errors.</span>
+<span class="comment">%</span>
+<span class="comment">%Pass:    passes all tests</span>
+<span class="comment">%Partial: [no partial passing condition]</span>
+<span class="comment">%Fail:    fails any test</span>
+pass_part_fail=<span class="string">'pass'</span>;
+
+SelfTestFail = false;
+<span class="comment">% Run the self-validator function(s).</span>
+checkpoint(<span class="string">'write_only_to_file_on_read'</span>)
+SelfTestFail = SelfTestFail || SelfTest__findND;
+checkpoint(<span class="string">'read'</span>);
+
+<span class="comment">% This function does not contain a real test suite other than the self-validator.</span>
+<span class="keyword">if</span> SelfTestFail
+    <span class="keyword">if</span> nargout&gt;0
+        pass_part_fail=<span class="string">'fail'</span>;
+    <span class="keyword">else</span>
+        rethrow(ME)
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+disp([<span class="string">'tester function '</span> mfilename <span class="string">' finished '</span>])
+<span class="keyword">if</span> nargout==0,clear,<span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">function</span> varargout=findND(X,varargin)
+<span class="comment">% Find non-zero elements in ND-arrays. Replicates all behavior from find.</span>
+<span class="comment">%</span>
+<span class="comment">% The syntax is equivalent to the built-in find, but extended to multi-dimensional input.</span>
+<span class="comment">%</span>
+<span class="comment">% The syntax with more than one input is present in the doc for R14 (Matlab 7.0), so R13 (Matlab</span>
+<span class="comment">% 6.5) is the latest release without support for this syntax.</span>
+<span class="comment">%</span>
+<span class="comment">% [...] = findND(X,K) returns at most the first K indices. K must be a positive scalar of any type.</span>
+<span class="comment">%</span>
+<span class="comment">% [...] = findND(X,K,side) returns either the first K or the last K indices. The input side  must</span>
+<span class="comment">% be a char, either 'first' or 'last'. The default behavior is 'first'.</span>
+<span class="comment">%</span>
+<span class="comment">% [I1,I2,I3,...,In] = findND(X,...) returns indices along all the dimensions of X.</span>
+<span class="comment">%</span>
+<span class="comment">% [I1,I2,I3,...,In,V] = findND(X,...) returns indices along all the dimensions of X, and</span>
+<span class="comment">% additionally returns a vector containing the values.</span>
+<span class="comment">%</span>
+<span class="comment">%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%</span>
+<span class="comment">%|                                                                         |%</span>
+<span class="comment">%|  Version: 2.0.0                                                         |%</span>
+<span class="comment">%|  Date:    2022-11-29                                                    |%</span>
+<span class="comment">%|  Author:  H.J. Wisselink                                                |%</span>
+<span class="comment">%|  Licence: CC by-nc-sa 4.0 ( creativecommons.org/licenses/by-nc-sa/4.0 ) |%</span>
+<span class="comment">%|  Email = 'h_j_wisselink*alumnus_utwente_nl';                            |%</span>
+<span class="comment">%|  Real_email = regexprep(Email,{'*','_'},{'@','.'})                      |%</span>
+<span class="comment">%|                                                                         |%</span>
+<span class="comment">%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%</span>
+<span class="comment">%</span>
+<span class="comment">% Tested on several versions of Matlab (ML 6.5 and onward) and Octave (4.4.1 and onward), and on</span>
+<span class="comment">% multiple operating systems (Windows/Ubuntu/MacOS). You can see the full test matrix below.</span>
+<span class="comment">% Compatibility considerations:</span>
+<span class="comment">% - This is expected to work on all releases.</span>
+
+<span class="comment">% Parse inputs.</span>
+<span class="keyword">if</span> ~(isnumeric(X) || islogical(X)) || numel(X)==0
+    error(<span class="string">'HJW:findND:FirstInput'</span>,<span class="keyword">...</span>
+        <span class="string">'Expected first input (X) to be a non-empty numeric or logical array.'</span>)
+<span class="keyword">end</span>
+<span class="keyword">switch</span> nargin
+    <span class="keyword">case</span> 1 <span class="comment">%[...] = findND(X);</span>
+        side = <span class="string">'first'</span>;
+        K = inf;
+    <span class="keyword">case</span> 2 <span class="comment">%[...] = findND(X,K);</span>
+        side = <span class="string">'first'</span>;
+        K = varargin{1};
+        <span class="keyword">if</span> ~(isnumeric(K) || islogical(K)) || numel(K)~=1 || any(K&lt;0)
+            error(<span class="string">'HJW:findND:SecondInput'</span>,<span class="keyword">...</span>
+                <span class="string">'Expected second input (K) to be a positive numeric or logical scalar.'</span>)
+        <span class="keyword">end</span>
+    <span class="keyword">case</span> 3 <span class="comment">%[...] = FIND(X,K,'first');</span>
+        K = varargin{1};
+        <span class="keyword">if</span> ~(isnumeric(K) || islogical(K)) || numel(K)~=1 || any(K&lt;0)
+            error(<span class="string">'HJW:findND:SecondInput'</span>,<span class="keyword">...</span>
+                <span class="string">'Expected second input (K) to be a positive numeric or logical scalar.'</span>)
+        <span class="keyword">end</span>
+        side = varargin{2};
+        <span class="keyword">if</span> isa(side,<span class="string">'string'</span>) &amp;&amp; numel(side)==1,side = char(side);<span class="keyword">end</span>
+        <span class="keyword">if</span> ~isa(side,<span class="string">'char'</span>) || ~( strcmpi(side,<span class="string">'first'</span>) || strcmpi(side,<span class="string">'last'</span>))
+            error(<span class="string">'HJW:findND:ThirdInput'</span>,<span class="string">'Third input must be either ''first'' or ''last''.'</span>)
+        <span class="keyword">end</span>
+        side = lower(side);
+    <span class="keyword">otherwise</span>
+        error(<span class="string">'HJW:findND:InputNumber'</span>,<span class="string">'Incorrect number of inputs.'</span>)
+<span class="keyword">end</span>
+
+<span class="comment">% Parse outputs.</span>
+<span class="comment">% Allowed outputs: 0, 1, nDims, nDims+1</span>
+<span class="keyword">if</span> nargout&gt;1 &amp;&amp; nargout&lt;ndims(X)
+    error(<span class="string">'HJW:findND:Output'</span>,<span class="string">'Incorrect number of output arguments.'</span>)
+<span class="keyword">end</span>
+
+checkpoint(<span class="string">'findND'</span>,<span class="string">'ifversion'</span>)
+<span class="keyword">persistent</span> OldSyntax,<span class="keyword">if</span> isempty(OldSyntax),OldSyntax = ifversion(<span class="string">'&lt;'</span>,7,<span class="string">'Octave'</span>,<span class="string">'&lt;'</span>,3);<span class="keyword">end</span>
+
+<span class="comment">% Replicate the behavior of find by rounding nargout to 1 if it is 0.</span>
+varargout = cell(max(1,nargout),1);
+<span class="keyword">if</span> OldSyntax
+    <span class="comment">% The find(X,k,side) syntax was introduced in v7.</span>
+    <span class="keyword">if</span> nargout&gt;ndims(X)
+        [ind,ignore,val] = find(X(:)); <span class="comment">%#ok&lt;ASGLU&gt; (no tilde pre-R2009b)</span>
+        <span class="comment">% X(:) converts X to a column vector. Treating X(:) as a matrix forces val to be the actual</span>
+        <span class="comment">% value, instead of the column index.</span>
+        <span class="keyword">if</span> length(ind)&gt;K
+            <span class="keyword">if</span> strcmp(side,<span class="string">'first'</span>) <span class="comment">% Select first K outputs.</span>
+                ind = ind(1:K);
+                val = val(1:K);
+            <span class="keyword">else</span>                    <span class="comment">% Select last K outputs.</span>
+                ind = ind((end-K+1):end);
+                val = val((end-K+1):end);
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+        [varargout{1:(end-1)}] = ind2sub(size(X),ind);
+        varargout{end} = val;
+    <span class="keyword">else</span>
+        ind = find(X);
+        <span class="keyword">if</span> numel(ind)&gt;K
+            <span class="keyword">if</span> strcmp(side,<span class="string">'first'</span>)
+                <span class="comment">% Select first K outputs.</span>
+                ind = ind(1:K);
+            <span class="keyword">else</span>
+                <span class="comment">% Select last K outputs.</span>
+                ind = ind((end-K+1):end);
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+        [varargout{:}] = ind2sub(size(X),ind);
+    <span class="keyword">end</span>
+<span class="keyword">else</span>
+    <span class="keyword">if</span> nargout&gt;ndims(X)
+        [ind,ignore,val] = find(X(:),K,side);<span class="comment">%#ok&lt;ASGLU&gt;</span>
+        <span class="comment">% X(:) converts X to a column vector. Treating X(:) as a matrix forces val to be the actual</span>
+        <span class="comment">% value, instead of the column index.</span>
+        [varargout{1:(end-1)}] = ind2sub(size(X),ind);
+        varargout{end} = val;
+    <span class="keyword">else</span>
+        ind = find(X,K,side);
+        [varargout{:}] = ind2sub(size(X),ind);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">function</span> v000=ifversion(v001,v002,v003,v004,v005),<span class="keyword">persistent</span> v006 v007 v008,<span class="keyword">if</span> isempty(v006),<span class="keyword">...</span>
+v008=exist(<span class="string">'OCTAVE_VERSION'</span>,<span class="string">'builtin'</span>);v006=[100,1] * sscanf(version,<span class="string">'%d.%d'</span>,2);v007={<span class="string">'R13'</span> 605;
+<span class="string">'R13SP1'</span> 605;<span class="string">'R13SP2'</span> 605;<span class="string">'R14'</span> 700;<span class="string">'R14SP1'</span> 700;<span class="string">'R14SP2'</span> 700;<span class="string">'R14SP3'</span> 701;<span class="string">'R2006a'</span> 702;
+<span class="string">'R2006b'</span> 703;<span class="string">'R2007a'</span> 704;<span class="string">'R2007b'</span> 705;<span class="string">'R2008a'</span> 706;<span class="string">'R2008b'</span> 707;<span class="string">'R2009a'</span> 708;<span class="string">'R2009b'</span> 709;
+<span class="string">'R2010a'</span> 710;<span class="string">'R2010b'</span> 711;<span class="string">'R2011a'</span> 712;<span class="string">'R2011b'</span> 713;<span class="string">'R2012a'</span> 714;<span class="string">'R2012b'</span> 800;<span class="string">'R2013a'</span> 801;
+<span class="string">'R2013b'</span> 802;<span class="string">'R2014a'</span> 803;<span class="string">'R2014b'</span> 804;<span class="string">'R2015a'</span> 805;<span class="string">'R2015b'</span> 806;<span class="string">'R2016a'</span> 900;<span class="string">'R2016b'</span> 901;
+<span class="string">'R2017a'</span> 902;<span class="string">'R2017b'</span> 903;<span class="string">'R2018a'</span> 904;<span class="string">'R2018b'</span> 905;<span class="string">'R2019a'</span> 906;<span class="string">'R2019b'</span> 907;<span class="string">'R2020a'</span> 908;
+<span class="string">'R2020b'</span> 909;<span class="string">'R2021a'</span> 910;<span class="string">'R2021b'</span> 911;<span class="string">'R2022a'</span> 912;<span class="string">'R2022b'</span> 913};<span class="keyword">end</span>,<span class="keyword">if</span> v008,<span class="keyword">if</span> nargin==2,<span class="keyword">...</span>
+warning(<span class="string">'HJW:ifversion:NoOctaveTest'</span>,[<span class="string">'No version test for Octave was provided.'</span>,char(10),<span class="keyword">...</span>
+<span class="string">'This function might return an unexpected outcome.'</span>]),<span class="keyword">if</span> isnumeric(v002),v009=<span class="keyword">...</span>
+0.1*v002+0.9*fix(v002);v009=round(100*v009);<span class="keyword">else</span>,v010=ismember(v007(:,1),v002);<span class="keyword">if</span> sum(v010)~=1,<span class="keyword">...</span>
+warning(<span class="string">'HJW:ifversion:NotInDict'</span>,<span class="string">'The requested version is not in the hard-coded list.'</span>),v000=<span class="keyword">...</span>
+NaN;<span class="keyword">return</span>,<span class="keyword">else</span>,v009=v007{v010,2};<span class="keyword">end</span>,<span class="keyword">end</span>,<span class="keyword">elseif</span> nargin==4,[v001,v009]=deal(v003,v004);v009=<span class="keyword">...</span>
+0.1*v009+0.9*fix(v009);v009=round(100*v009);<span class="keyword">else</span>,[v001,v009]=deal(v004,v005);v009=<span class="keyword">...</span>
+0.1*v009+0.9*fix(v009);v009=round(100*v009);<span class="keyword">end</span>,<span class="keyword">else</span>,<span class="keyword">if</span> isnumeric(v002),v009=<span class="keyword">...</span>
+0.1*v002+0.9*fix(v002);v009=round(100*v009);<span class="keyword">else</span>,v010=ismember(v007(:,1),v002);<span class="keyword">if</span> sum(v010)~=1,<span class="keyword">...</span>
+warning(<span class="string">'HJW:ifversion:NotInDict'</span>,<span class="string">'The requested version is not in the hard-coded list.'</span>),v000=<span class="keyword">...</span>
+NaN;<span class="keyword">return</span>,<span class="keyword">else</span>,v009=v007{v010,2};<span class="keyword">end</span>,<span class="keyword">end</span>,<span class="keyword">end</span>,<span class="keyword">switch</span> v001,<span class="keyword">case</span><span class="string">'=='</span>,v000=v006==v009;<span class="keyword">case</span><span class="string">'&lt;'</span>,v000=<span class="keyword">...</span>
+v006 &lt; v009;<span class="keyword">case</span><span class="string">'&lt;='</span>,v000=v006 &lt;=v009;<span class="keyword">case</span><span class="string">'&gt;'</span>,v000=v006 &gt; v009;<span class="keyword">case</span><span class="string">'&gt;='</span>,v000=v006 &gt;=v009;<span class="keyword">end</span>,<span class="keyword">end</span>
+<span class="keyword">function</span> A=randi_stable_seed(minmax,sz)
+<span class="comment">% This uses the GCC LCG to generate values and MINSTD to generate new seed values.</span>
+<span class="comment">% https://en.wikipedia.org/wiki/Linear_congruential_generator</span>
+<span class="comment">% https://en.wikipedia.org/wiki/Lehmer_random_number_generator</span>
+<span class="comment">%</span>
+<span class="comment">% Syntax:</span>
+<span class="comment">%   A = randi_stable_seed('reset')</span>
+<span class="comment">%   A = randi_stable_seed('reset',seed_intialize_value)</span>
+<span class="comment">%   A = randi_stable_seed(minmax,sz)</span>
+<span class="keyword">if</span> isa(minmax,<span class="string">'char'</span>) &amp;&amp; strcmp(minmax,<span class="string">'reset'</span>)
+    <span class="keyword">if</span> nargin&lt;2,seed_intialize_value=default_init_seed;<span class="keyword">else</span>,seed_intialize_value=sz;<span class="keyword">end</span>
+    GCC_LCG__advance_seed(seed_intialize_value)
+    <span class="keyword">return</span>
+<span class="keyword">end</span>
+<span class="comment">% Generate the array using the automatically altered seed.</span>
+A = internal_GCC_LCG(minmax,sz,GCC_LCG__advance_seed);
+<span class="keyword">end</span>
+<span class="keyword">function</span> A=internal_GCC_LCG(minmax,sz,seed)
+<span class="comment">% This is the actual LCG.</span>
+A=zeros(sz);
+<span class="keyword">if</span> numel(minmax)==1,minmax=[1 minmax];<span class="keyword">end</span>
+m = 2^31;a = 1103515245;c = 12345;
+N = abs(diff(minmax))+1;
+A(1) = seed;
+<span class="keyword">for</span> n=2:numel(A)
+    A(n) = mod(a*A(n-1)+c,m);
+<span class="keyword">end</span>
+A = mod(A,N)+min(minmax);
+<span class="keyword">end</span>
+<span class="keyword">function</span> val=default_init_seed,val=1;<span class="keyword">end</span>
+<span class="keyword">function</span> seed = GCC_LCG__advance_seed(init_val)
+<span class="comment">% Generate a seed that automatically advances.</span>
+<span class="keyword">persistent</span> seed_
+<span class="keyword">if</span> isempty(seed_) || nargin==1
+    <span class="keyword">if</span> nargin==0,init_val=default_init_seed;<span class="keyword">end</span>
+    x = randi_MINSTD([1 2^30],[1 2],init_val);
+    seed_ = randi_MINSTD([1 x(1)],[1 5],x(2));
+    <span class="keyword">if</span> nargin==1,<span class="keyword">return</span>,<span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">% Use a product and addition to avoid the minmax trending to 1.</span>
+seed_ = randi_MINSTD(<span class="keyword">...</span>
+    [1 sum(seed_)],<span class="keyword">...</span>
+    [1 5],<span class="keyword">...</span>
+    seed_(2)*(1+seed_(3))*(2+seed_(4)));
+<span class="comment">% Extract a single value to serve as the real seed.</span>
+seed = seed_(5);
+<span class="keyword">end</span>
+<span class="keyword">function</span> A=randi_MINSTD(minmax,sz,seed)
+<span class="comment">% https://en.wikipedia.org/wiki/Lehmer_random_number_generator</span>
+A = zeros(sz);
+a = 48271;m = 2^31 - 1;
+N = abs(diff(minmax))+1;
+A(1) = seed;
+<span class="keyword">for</span> n=2:numel(A)
+    A(n) = mod(a*A(n-1),m);
+<span class="keyword">end</span>
+A = mod(A,N)+min(minmax);
+<span class="keyword">end</span>
+<span class="keyword">function</span> SelfTestFailed=SelfTest__findND
+<span class="comment">% Run a self-test to ensure the function works as intended.</span>
+<span class="comment">% This is intended to test internal function that do not have stand-alone testers, or are included</span>
+<span class="comment">% in many different functions as subfunction, which would make bug regression a larger issue.</span>
+
+<span class="comment">% This flag will be reset if an error occurs, but otherwise should ensure this test function</span>
+<span class="comment">% immediately exits in order to minimize the impact on runtime.</span>
+<span class="keyword">persistent</span> SelfTestFlag,<span class="keyword">if</span> ~isempty(SelfTestFlag),<span class="keyword">return</span>,<span class="keyword">end</span>
+SelfTestFlag = true; <span class="comment">% Prevent infinite recursion.</span>
+<span class="keyword">if</span> nargout==1,SelfTestFailed=false;<span class="keyword">end</span>
+
+test_number = 0;ErrorFlag = false;
+<span class="keyword">while</span> true,test_number=test_number+1;
+    <span class="keyword">switch</span> test_number
+        <span class="keyword">case</span> 0 <span class="comment">% (test template)</span>
+            <span class="keyword">try</span> ME=[];
+            <span class="keyword">catch</span> ME;<span class="keyword">if</span> isempty(ME),ME=lasterror;<span class="keyword">end</span> <span class="comment">%#ok&lt;LERR&gt;</span>
+                ErrorFlag = true;<span class="keyword">break</span>
+            <span class="keyword">end</span>
+        <span class="keyword">case</span> 1
+            <span class="keyword">try</span> ME=[];
+                x = findND([0 1         0        1    2    ],2,<span class="string">'last'</span>);
+                y = findND([0 1 isequal(x,[4,5]) 1 numel(x)],2,<span class="string">'first'</span>);
+                <span class="keyword">if</span> ~isequal([2 3],y)
+                    ErrorFlag = true;<span class="keyword">break</span>
+                <span class="keyword">end</span>
+            <span class="keyword">catch</span> ME;<span class="keyword">if</span> isempty(ME),ME=lasterror;<span class="keyword">end</span> <span class="comment">%#ok&lt;LERR&gt;</span>
+                ErrorFlag = true;<span class="keyword">break</span>
+            <span class="keyword">end</span>
+        <span class="keyword">case</span> 2
+            <span class="keyword">try</span> ME=[];
+                checkpoint(<span class="string">'SelfTest__findND'</span>,<span class="string">'randi_stable_seed'</span>)
+                randi_stable_seed(<span class="string">'reset'</span>,test_number)
+                <span class="keyword">for</span> n=1:10
+                    checkpoint(<span class="string">'SelfTest__findND'</span>,<span class="string">'randi_stable_seed'</span>)
+                    dims = randi_stable_seed(4,1);
+                    <span class="comment">% Generate an array of a random size.</span>
+                    A = zeros([10*ones(1,dims) 1]);
+                    <span class="comment">% Generate a random index to mark.</span>
+                    checkpoint(<span class="string">'SelfTest__findND'</span>,<span class="string">'randi_stable_seed'</span>)
+                    xyz = randi_stable_seed(length(A),[1,ndims(A)]);
+                    xyz = num2cell(xyz);
+                    A(xyz{:}) = rand;
+                    <span class="comment">% Attempt to replicate the index array with findND.</span>
+                    c = cell(size(xyz));
+                    [c{:}] = findND(A);
+                    <span class="keyword">if</span> ~isequal(xyz,c),ErrorFlag = true;<span class="keyword">break</span>,<span class="keyword">end</span>
+                <span class="keyword">end</span>
+            <span class="keyword">catch</span> ME;<span class="keyword">if</span> isempty(ME),ME=lasterror;<span class="keyword">end</span> <span class="comment">%#ok&lt;LERR&gt;</span>
+                ErrorFlag = true;<span class="keyword">break</span>
+            <span class="keyword">end</span>
+        <span class="keyword">case</span> 3
+            <span class="keyword">try</span> ME=[];
+                checkpoint(<span class="string">'SelfTest__findND'</span>,<span class="string">'randi_stable_seed'</span>)
+                randi_stable_seed(<span class="string">'reset'</span>,test_number)
+                <span class="keyword">for</span> n=1:10
+                    dims = randi_stable_seed(4,1);
+                    <span class="comment">% Generate an array of a random size.</span>
+                    A = zeros([10*ones(1,dims) 1]);
+                    <span class="comment">% Generate a random index to mark.</span>
+                    checkpoint(<span class="string">'SelfTest__findND'</span>,<span class="string">'randi_stable_seed'</span>)
+                    xyz = randi_stable_seed(length(A),[1,ndims(A)]);
+                    xyz_ = num2cell(xyz);
+                    xyz = mat2cell(xyz,size(xyz,1),ones(1,size(xyz,2)));
+                    <span class="keyword">for</span> k=1:size(xyz_,1)
+                        A(xyz_{k,:})=rand;
+                    <span class="keyword">end</span>
+                    <span class="comment">% Attempt to replicate the index array with findND.</span>
+                    c = cell(size(xyz));
+                    [c{:}] = findND(A);
+                    result = {size( c ),sortrows(horzcat( c {:}))};
+                    expect = {size(xyz),sortrows(horzcat(xyz{:}))};
+                    <span class="keyword">if</span> ~isequal(result,expect),ErrorFlag = true;<span class="keyword">break</span>,<span class="keyword">end</span>
+                    <span class="comment">% Confirm equivalence with built-in for 1D/2D arrays.</span>
+                    <span class="keyword">if</span> ndims(A)&lt;=2
+                        checkpoint(<span class="string">'SelfTest__findND________________________line080'</span>,<span class="string">'CoverTest'</span>)
+                        <span class="keyword">for</span> k=1:3
+                            c1 = cell(1,k);
+                            c2 = cell(1,k);
+                            [c1{:}] = find(A);
+                            [c2{:}] = findND(A);
+                            <span class="keyword">if</span> ~isequal(c1,c2),ErrorFlag = true;<span class="keyword">break</span>,<span class="keyword">end</span>
+                        <span class="keyword">end</span>
+                        <span class="keyword">if</span> ErrorFlag,<span class="keyword">break</span>,<span class="keyword">end</span> <span class="comment">% Break out of the outer loop.</span>
+                    <span class="keyword">end</span>
+                <span class="keyword">end</span>
+            <span class="keyword">catch</span> ME;<span class="keyword">if</span> isempty(ME),ME=lasterror;<span class="keyword">end</span> <span class="comment">%#ok&lt;LERR&gt;</span>
+                ErrorFlag = true;<span class="keyword">break</span>
+            <span class="keyword">end</span>
+        <span class="keyword">otherwise</span> <span class="comment">% No more tests.</span>
+            <span class="keyword">break</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">if</span> ErrorFlag
+    <span class="keyword">if</span> nargout==1,SelfTestFailed=true;<span class="keyword">return</span>,<span class="keyword">end</span>
+    SelfTestFlag = [];
+    <span class="keyword">if</span> isempty(ME)
+        error(<span class="string">'self-test %d failed'</span>,test_number)
+    <span class="keyword">else</span>
+        error(<span class="string">'self-test %d failed\n   ID: %s\n   msg: %s'</span>,<span class="keyword">...</span>
+            test_number,ME.identifier,ME.message)
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> out=checkpoint(caller,varargin)
+<span class="comment">% This function has limited functionality compared to the debugging version.</span>
+<span class="comment">% (one of the differences being that this doesn't read/write to a file)</span>
+<span class="comment">% Syntax:</span>
+<span class="comment">%   checkpoint(caller,dependency)</span>
+<span class="comment">%   checkpoint(caller,dependency_1,...,dependency_n)</span>
+<span class="comment">%   checkpoint(caller,checkpoint_flag)</span>
+<span class="comment">%   checkpoint('reset')</span>
+<span class="comment">%   checkpoint('read')</span>
+<span class="comment">%   checkpoint('write_only_to_file_on_read')</span>
+<span class="comment">%   checkpoint('write_to_file_every_call')</span>
+
+<span class="keyword">persistent</span> data
+<span class="keyword">if</span> isempty(data)||strcmp(caller,<span class="string">'reset'</span>)
+    data = struct(<span class="string">'total'</span>,0,<span class="string">'time'</span>,0,<span class="string">'callers'</span>,{{}});
+<span class="keyword">end</span>
+<span class="keyword">if</span> strcmp(caller,<span class="string">"read"</span>)
+    out = data.time;<span class="keyword">return</span>
+<span class="keyword">end</span>
+<span class="keyword">if</span> nargin==1,<span class="keyword">return</span>,<span class="keyword">end</span>
+then = now;
+<span class="keyword">for</span> n=1:numel(varargin)
+    data.total = data.total+1;
+    data.callers = sort(unique([data.callers {caller}]));
+    <span class="keyword">if</span> ~isfield(data,varargin{n}),data.(varargin{n})=0;<span class="keyword">end</span>
+    data.(varargin{n}) = data.(varargin{n})+1;
+<span class="keyword">end</span>
+data.time = data.time+ (now-then)*( 24*60*60*1e3 );
+data.time = round(data.time);
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2022b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% findND
+%
+% <html><tt style="font-size:0%">Formatted documentation for the findND function.</tt>
+% <div style="margin-top:-5em;color:grey">Find non-zero elements in ND-arrays. Replicates all behavior from find.
+% </div>
+% </html>
+
+%% Description
+% <html>
+% The syntax is equivalent to the built-in find, but extended to multi-dimensional input.
+% <br>The syntax with more than one input is present in the doc for R14 (Matlab 7.0), so R13
+% (Matlab 6.5) is the latest release without support for this syntax.
+% </html>
+
+%% Syntax
+%
+%   [___] = findND(X,K)
+%   [___] = findND(X,K,side)
+%   [I1,I2,I3,...,In] = findND(___)
+%   [I1,I2,I3,...,In,V] = findND(___)
+
+%% Output arguments
+%
+% <html>
+% <table border=1>
+% <tr><td>
+% I1-In
+% </td><td>
+% Subscript indices for the positions found. Each is a column vector, except if the input array is
+% a row vector.
+% </td></tr>
+% <tr><td>
+% V
+% </td><td>
+% Array values on the found indices returns as a column vector, excect if the input array is a row
+% vector.
+% </td></tr>
+% </table>
+% </html>
+
+%% Input arguments
+%
+% <html>
+% <table border=1>
+% <tr><td>
+% X
+% </td><td>
+% Input data array. This can be any data type that is compatible with the builtin find or any
+% custom class that has a find method.
+% </td></tr>
+% <tr><td>
+% K
+% </td><td>
+% This positive scalar integer determines how many indices will be returned at most. Note that
+% fewer return values are possible.
+% </td></tr>
+% <tr><td>
+% side
+% </td><td>
+% This option determines whether the first <code>K</code> or the last <code>K</code> values are
+% returned. Allowed options are <code>'first'</code> and <code>'last'</code>, the former being the
+% default.
+% </td></tr>
+% </table>
+% </html>
+
+%% Compatibility, version info, and licence
+% <html>
+% Compatibility considerations:
+% <ul>
+%    <li>This is expected to work on all releases.</li>
+% </ul>
+% </html>
+% 
+% <html>
+% <table>
+% <tr>
+% <td> Test suite result </td>
+% <td style="border:2px solid black;"> Windows </td>
+% <td style="border:2px solid black;"> Linux </td>
+% <td style="border:2px solid black;"> MacOS </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2022b </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it>ubuntu_22.04 : Pass</it> </td>
+% <td> <it>Monterey : Pass</it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2022a </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it></it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2021b </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it>ubuntu_22.04 : Pass</it> </td>
+% <td> <it>Monterey : Pass</it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2021a </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it></it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2020b </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it>ubuntu_22.04 : Pass</it> </td>
+% <td> <it>Monterey : Pass</it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2020a </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it></it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2019b </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it>ubuntu_22.04 : Pass</it> </td>
+% <td> <it>Monterey : Pass</it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2019a </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it></it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2018a </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it>ubuntu_22.04 : Pass</it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2017b </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it>ubuntu_22.04 : Pass</it> </td>
+% <td> <it>Monterey : Pass</it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2016b </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it>ubuntu_22.04 : Pass</it> </td>
+% <td> <it>Monterey : Pass</it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2015a </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it>ubuntu_22.04 : Pass</it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2013b </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it></it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2012a </td>
+% <td> <it></it> </td>
+% <td> <it>ubuntu_22.04 : Pass</it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2011a </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it>ubuntu_22.04 : Pass</it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2010b </td>
+% <td> <it></it> </td>
+% <td> <it>ubuntu_22.04 : Pass</it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2010a </td>
+% <td> <it>W7 : Pass</it> </td>
+% <td> <it></it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab R2007b </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it></it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab 7.1 (R14SP3) </td>
+% <td> <it>XP : Pass</it> </td>
+% <td> <it></it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Matlab 6.5 (R13) </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it></it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Octave 7.2.0 </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it></it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Octave 6.2.0 </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it>ubuntu_22.04 : Pass</it> </td>
+% <td> <it>Catalina : Pass</it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Octave 5.2.0 </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it></it> </td>
+% <td> <it></it> </td>
+% </tr>
+% <tr>
+% <td style="border:2px solid black;"> Octave 4.4.1 </td>
+% <td> <it>W10 : Pass</it> </td>
+% <td> <it></it> </td>
+% <td> <it>Catalina : Pass</it> </td>
+% </tr>
+% </table>
+% </html>
+%
+%  Version: 2.0.0
+%  Date:    2022-11-29
+%  Author:  H.J. Wisselink
+%  Licence: CC by-nc-sa 4.0 ( https://creativecommons.org/licenses/by-nc-sa/4.0 )
+%  Email = 'h_j_wisselink*alumnus_utwente_nl';
+%  Real_email = regexprep(Email,{'*','_'},{'@','.'})
+
+%% Test suite
+%
+% This tester is included so you can test if your own modifications would introduce
+% any bugs. These tests form the basis for the compatibility table above. Note that
+% functions may be different between the tester version and the normal function. Make
+% sure to apply any modifications to both. The full tester function is included below.
+function pass_part_fail=aaa___findND___test(varargin)
+%This is not a true test suite, but it should confirm the function runs without errors.
+%
+%Pass:    passes all tests
+%Partial: [no partial passing condition]
+%Fail:    fails any test
+pass_part_fail='pass';
+
+SelfTestFail = false;
+% Run the self-validator function(s).
+checkpoint('write_only_to_file_on_read')
+SelfTestFail = SelfTestFail || SelfTest__findND;
+checkpoint('read');
+
+% This function does not contain a real test suite other than the self-validator.
+if SelfTestFail
+    if nargout>0
+        pass_part_fail='fail';
+    else
+        rethrow(ME)
+    end
+end
+disp(['tester function ' mfilename ' finished '])
+if nargout==0,clear,end
+end
+function varargout=findND(X,varargin)
+% Find non-zero elements in ND-arrays. Replicates all behavior from find.
+%
+% The syntax is equivalent to the built-in find, but extended to multi-dimensional input.
+%
+% The syntax with more than one input is present in the doc for R14 (Matlab 7.0), so R13 (Matlab
+% 6.5) is the latest release without support for this syntax.
+%
+% [...] = findND(X,K) returns at most the first K indices. K must be a positive scalar of any type.
+%
+% [...] = findND(X,K,side) returns either the first K or the last K indices. The input side  must
+% be a char, either 'first' or 'last'. The default behavior is 'first'.
+%
+% [I1,I2,I3,...,In] = findND(X,...) returns indices along all the dimensions of X.
+%
+% [I1,I2,I3,...,In,V] = findND(X,...) returns indices along all the dimensions of X, and
+% additionally returns a vector containing the values.
+%
+%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%
+%|                                                                         |%
+%|  Version: 2.0.0                                                         |%
+%|  Date:    2022-11-29                                                    |%
+%|  Author:  H.J. Wisselink                                                |%
+%|  Licence: CC by-nc-sa 4.0 ( creativecommons.org/licenses/by-nc-sa/4.0 ) |%
+%|  Email = 'h_j_wisselink*alumnus_utwente_nl';                            |%
+%|  Real_email = regexprep(Email,{'*','_'},{'@','.'})                      |%
+%|                                                                         |%
+%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%
+%
+% Tested on several versions of Matlab (ML 6.5 and onward) and Octave (4.4.1 and onward), and on
+% multiple operating systems (Windows/Ubuntu/MacOS). You can see the full test matrix below.
+% Compatibility considerations:
+% - This is expected to work on all releases.
+
+% Parse inputs.
+if ~(isnumeric(X) || islogical(X)) || numel(X)==0
+    error('HJW:findND:FirstInput',...
+        'Expected first input (X) to be a non-empty numeric or logical array.')
+end
+switch nargin
+    case 1 %[...] = findND(X);
+        side = 'first';
+        K = inf;
+    case 2 %[...] = findND(X,K);
+        side = 'first';
+        K = varargin{1};
+        if ~(isnumeric(K) || islogical(K)) || numel(K)~=1 || any(K<0)
+            error('HJW:findND:SecondInput',...
+                'Expected second input (K) to be a positive numeric or logical scalar.')
+        end
+    case 3 %[...] = FIND(X,K,'first');
+        K = varargin{1};
+        if ~(isnumeric(K) || islogical(K)) || numel(K)~=1 || any(K<0)
+            error('HJW:findND:SecondInput',...
+                'Expected second input (K) to be a positive numeric or logical scalar.')
+        end
+        side = varargin{2};
+        if isa(side,'string') && numel(side)==1,side = char(side);end
+        if ~isa(side,'char') || ~( strcmpi(side,'first') || strcmpi(side,'last'))
+            error('HJW:findND:ThirdInput','Third input must be either ''first'' or ''last''.')
+        end
+        side = lower(side);
+    otherwise
+        error('HJW:findND:InputNumber','Incorrect number of inputs.')
+end
+
+% Parse outputs.
+% Allowed outputs: 0, 1, nDims, nDims+1
+if nargout>1 && nargout<ndims(X)
+    error('HJW:findND:Output','Incorrect number of output arguments.')
+end
+
+checkpoint('findND','ifversion')
+persistent OldSyntax,if isempty(OldSyntax),OldSyntax = ifversion('<',7,'Octave','<',3);end
+
+% Replicate the behavior of find by rounding nargout to 1 if it is 0.
+varargout = cell(max(1,nargout),1);
+if OldSyntax
+    % The find(X,k,side) syntax was introduced in v7.
+    if nargout>ndims(X)
+        [ind,ignore,val] = find(X(:)); %#ok<ASGLU> (no tilde pre-R2009b)
+        % X(:) converts X to a column vector. Treating X(:) as a matrix forces val to be the actual
+        % value, instead of the column index.
+        if length(ind)>K
+            if strcmp(side,'first') % Select first K outputs.
+                ind = ind(1:K);
+                val = val(1:K);
+            else                    % Select last K outputs.
+                ind = ind((end-K+1):end);
+                val = val((end-K+1):end);
+            end
+        end
+        [varargout{1:(end-1)}] = ind2sub(size(X),ind);
+        varargout{end} = val;
+    else
+        ind = find(X);
+        if numel(ind)>K
+            if strcmp(side,'first')
+                % Select first K outputs.
+                ind = ind(1:K);
+            else
+                % Select last K outputs.
+                ind = ind((end-K+1):end);
+            end
+        end
+        [varargout{:}] = ind2sub(size(X),ind);
+    end
+else
+    if nargout>ndims(X)
+        [ind,ignore,val] = find(X(:),K,side);%#ok<ASGLU>
+        % X(:) converts X to a column vector. Treating X(:) as a matrix forces val to be the actual
+        % value, instead of the column index.
+        [varargout{1:(end-1)}] = ind2sub(size(X),ind);
+        varargout{end} = val;
+    else
+        ind = find(X,K,side);
+        [varargout{:}] = ind2sub(size(X),ind);
+    end
+end
+end
+function v000=ifversion(v001,v002,v003,v004,v005),persistent v006 v007 v008,if isempty(v006),...
+v008=exist('OCTAVE_VERSION','builtin');v006=[100,1] * sscanf(version,'%d.%d',2);v007={'R13' 605;
+'R13SP1' 605;'R13SP2' 605;'R14' 700;'R14SP1' 700;'R14SP2' 700;'R14SP3' 701;'R2006a' 702;
+'R2006b' 703;'R2007a' 704;'R2007b' 705;'R2008a' 706;'R2008b' 707;'R2009a' 708;'R2009b' 709;
+'R2010a' 710;'R2010b' 711;'R2011a' 712;'R2011b' 713;'R2012a' 714;'R2012b' 800;'R2013a' 801;
+'R2013b' 802;'R2014a' 803;'R2014b' 804;'R2015a' 805;'R2015b' 806;'R2016a' 900;'R2016b' 901;
+'R2017a' 902;'R2017b' 903;'R2018a' 904;'R2018b' 905;'R2019a' 906;'R2019b' 907;'R2020a' 908;
+'R2020b' 909;'R2021a' 910;'R2021b' 911;'R2022a' 912;'R2022b' 913};end,if v008,if nargin==2,...
+warning('HJW:ifversion:NoOctaveTest',['No version test for Octave was provided.',char(10),...
+'This function might return an unexpected outcome.']),if isnumeric(v002),v009=...
+0.1*v002+0.9*fix(v002);v009=round(100*v009);else,v010=ismember(v007(:,1),v002);if sum(v010)~=1,...
+warning('HJW:ifversion:NotInDict','The requested version is not in the hard-coded list.'),v000=...
+NaN;return,else,v009=v007{v010,2};end,end,elseif nargin==4,[v001,v009]=deal(v003,v004);v009=...
+0.1*v009+0.9*fix(v009);v009=round(100*v009);else,[v001,v009]=deal(v004,v005);v009=...
+0.1*v009+0.9*fix(v009);v009=round(100*v009);end,else,if isnumeric(v002),v009=...
+0.1*v002+0.9*fix(v002);v009=round(100*v009);else,v010=ismember(v007(:,1),v002);if sum(v010)~=1,...
+warning('HJW:ifversion:NotInDict','The requested version is not in the hard-coded list.'),v000=...
+NaN;return,else,v009=v007{v010,2};end,end,end,switch v001,case'==',v000=v006==v009;case'<',v000=...
+v006 < v009;case'<=',v000=v006 <=v009;case'>',v000=v006 > v009;case'>=',v000=v006 >=v009;end,end
+function A=randi_stable_seed(minmax,sz)
+% This uses the GCC LCG to generate values and MINSTD to generate new seed values.
+% https://en.wikipedia.org/wiki/Linear_congruential_generator
+% https://en.wikipedia.org/wiki/Lehmer_random_number_generator
+%
+% Syntax:
+%   A = randi_stable_seed('reset')
+%   A = randi_stable_seed('reset',seed_intialize_value)
+%   A = randi_stable_seed(minmax,sz)
+if isa(minmax,'char') && strcmp(minmax,'reset')
+    if nargin<2,seed_intialize_value=default_init_seed;else,seed_intialize_value=sz;end
+    GCC_LCG__advance_seed(seed_intialize_value)
+    return
+end
+% Generate the array using the automatically altered seed.
+A = internal_GCC_LCG(minmax,sz,GCC_LCG__advance_seed);
+end
+function A=internal_GCC_LCG(minmax,sz,seed)
+% This is the actual LCG.
+A=zeros(sz);
+if numel(minmax)==1,minmax=[1 minmax];end
+m = 2^31;a = 1103515245;c = 12345;
+N = abs(diff(minmax))+1;
+A(1) = seed;
+for n=2:numel(A)
+    A(n) = mod(a*A(n-1)+c,m);
+end
+A = mod(A,N)+min(minmax);
+end
+function val=default_init_seed,val=1;end
+function seed = GCC_LCG__advance_seed(init_val)
+% Generate a seed that automatically advances.
+persistent seed_
+if isempty(seed_) || nargin==1
+    if nargin==0,init_val=default_init_seed;end
+    x = randi_MINSTD([1 2^30],[1 2],init_val);
+    seed_ = randi_MINSTD([1 x(1)],[1 5],x(2));
+    if nargin==1,return,end
+end
+% Use a product and addition to avoid the minmax trending to 1.
+seed_ = randi_MINSTD(...
+    [1 sum(seed_)],...
+    [1 5],...
+    seed_(2)*(1+seed_(3))*(2+seed_(4)));
+% Extract a single value to serve as the real seed.
+seed = seed_(5);
+end
+function A=randi_MINSTD(minmax,sz,seed)
+% https://en.wikipedia.org/wiki/Lehmer_random_number_generator
+A = zeros(sz);
+a = 48271;m = 2^31 - 1;
+N = abs(diff(minmax))+1;
+A(1) = seed;
+for n=2:numel(A)
+    A(n) = mod(a*A(n-1),m);
+end
+A = mod(A,N)+min(minmax);
+end
+function SelfTestFailed=SelfTest__findND
+% Run a self-test to ensure the function works as intended.
+% This is intended to test internal function that do not have stand-alone testers, or are included
+% in many different functions as subfunction, which would make bug regression a larger issue.
+
+% This flag will be reset if an error occurs, but otherwise should ensure this test function
+% immediately exits in order to minimize the impact on runtime.
+persistent SelfTestFlag,if ~isempty(SelfTestFlag),return,end
+SelfTestFlag = true; % Prevent infinite recursion.
+if nargout==1,SelfTestFailed=false;end
+
+test_number = 0;ErrorFlag = false;
+while true,test_number=test_number+1;
+    switch test_number
+        case 0 % (test template)
+            try ME=[];
+            catch ME;if isempty(ME),ME=lasterror;end %#ok<LERR>
+                ErrorFlag = true;break
+            end
+        case 1
+            try ME=[];
+                x = findND([0 1         0        1    2    ],2,'last');
+                y = findND([0 1 isequal(x,[4,5]) 1 numel(x)],2,'first');
+                if ~isequal([2 3],y)
+                    ErrorFlag = true;break
+                end
+            catch ME;if isempty(ME),ME=lasterror;end %#ok<LERR>
+                ErrorFlag = true;break
+            end
+        case 2
+            try ME=[];
+                checkpoint('SelfTest__findND','randi_stable_seed')
+                randi_stable_seed('reset',test_number)
+                for n=1:10
+                    checkpoint('SelfTest__findND','randi_stable_seed')
+                    dims = randi_stable_seed(4,1);
+                    % Generate an array of a random size.
+                    A = zeros([10*ones(1,dims) 1]);
+                    % Generate a random index to mark.
+                    checkpoint('SelfTest__findND','randi_stable_seed')
+                    xyz = randi_stable_seed(length(A),[1,ndims(A)]);
+                    xyz = num2cell(xyz);
+                    A(xyz{:}) = rand;
+                    % Attempt to replicate the index array with findND.
+                    c = cell(size(xyz));
+                    [c{:}] = findND(A);
+                    if ~isequal(xyz,c),ErrorFlag = true;break,end
+                end
+            catch ME;if isempty(ME),ME=lasterror;end %#ok<LERR>
+                ErrorFlag = true;break
+            end
+        case 3
+            try ME=[];
+                checkpoint('SelfTest__findND','randi_stable_seed')
+                randi_stable_seed('reset',test_number)
+                for n=1:10
+                    dims = randi_stable_seed(4,1);
+                    % Generate an array of a random size.
+                    A = zeros([10*ones(1,dims) 1]);
+                    % Generate a random index to mark.
+                    checkpoint('SelfTest__findND','randi_stable_seed')
+                    xyz = randi_stable_seed(length(A),[1,ndims(A)]);
+                    xyz_ = num2cell(xyz);
+                    xyz = mat2cell(xyz,size(xyz,1),ones(1,size(xyz,2)));
+                    for k=1:size(xyz_,1)
+                        A(xyz_{k,:})=rand;
+                    end
+                    % Attempt to replicate the index array with findND.
+                    c = cell(size(xyz));
+                    [c{:}] = findND(A);
+                    result = {size( c ),sortrows(horzcat( c {:}))};
+                    expect = {size(xyz),sortrows(horzcat(xyz{:}))};
+                    if ~isequal(result,expect),ErrorFlag = true;break,end
+                    % Confirm equivalence with built-in for 1D/2D arrays.
+                    if ndims(A)<=2
+                        checkpoint('SelfTest__findND________________________line080','CoverTest')
+                        for k=1:3
+                            c1 = cell(1,k);
+                            c2 = cell(1,k);
+                            [c1{:}] = find(A);
+                            [c2{:}] = findND(A);
+                            if ~isequal(c1,c2),ErrorFlag = true;break,end
+                        end
+                        if ErrorFlag,break,end % Break out of the outer loop.
+                    end
+                end
+            catch ME;if isempty(ME),ME=lasterror;end %#ok<LERR>
+                ErrorFlag = true;break
+            end
+        otherwise % No more tests.
+            break
+    end
+end
+if ErrorFlag
+    if nargout==1,SelfTestFailed=true;return,end
+    SelfTestFlag = [];
+    if isempty(ME)
+        error('self-test %d failed',test_number)
+    else
+        error('self-test %d failed\n   ID: %s\n   msg: %s',...
+            test_number,ME.identifier,ME.message)
+    end
+end
+end
+
+function out=checkpoint(caller,varargin)
+% This function has limited functionality compared to the debugging version.
+% (one of the differences being that this doesn't read/write to a file)
+% Syntax:
+%   checkpoint(caller,dependency)
+%   checkpoint(caller,dependency_1,...,dependency_n)
+%   checkpoint(caller,checkpoint_flag)
+%   checkpoint('reset')
+%   checkpoint('read')
+%   checkpoint('write_only_to_file_on_read')
+%   checkpoint('write_to_file_every_call')
+
+persistent data
+if isempty(data)||strcmp(caller,'reset')
+    data = struct('total',0,'time',0,'callers',{{}});
+end
+if strcmp(caller,"read")
+    out = data.time;return
+end
+if nargin==1,return,end
+then = now;
+for n=1:numel(varargin)
+    data.total = data.total+1;
+    data.callers = sort(unique([data.callers {caller}]));
+    if ~isfield(data,varargin{n}),data.(varargin{n})=0;end
+    data.(varargin{n}) = data.(varargin{n})+1;
+end
+data.time = data.time+ (now-then)*( 24*60*60*1e3 );
+data.time = round(data.time);
+end
+
+
+
+##### SOURCE END #####
+--></body></html>

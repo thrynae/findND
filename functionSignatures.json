@@ -1,0 +1,16 @@
+{
+    "_schemaVersion": "1.0.0",
+    "_v_findND":"2.0.0",
+    "findND":
+    {
+        "inputs":
+        [
+            {"name":"X",    "kind":"required",
+             "purpose":"Data array to be searched"},
+            {"name":"K",    "kind":"positional", "type":["numeric","scalar","positive"],
+             "purpose":"Maximum number of returned indices"},
+            {"name":"side", "kind":"positional", "type":["char","choices={'first','last'}"],
+             "purpose":"Return first K or last K indices"}
+        ]
+    }
+}
